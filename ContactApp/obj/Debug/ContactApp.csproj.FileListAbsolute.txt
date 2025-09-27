@@ -1,0 +1,8 @@
+C:\Users\freew\Documents\Cours_C#\ContactApp\ContactApp\bin\Debug\ContactApp.exe.config
+C:\Users\freew\Documents\Cours_C#\ContactApp\ContactApp\bin\Debug\ContactApp.exe
+C:\Users\freew\Documents\Cours_C#\ContactApp\ContactApp\bin\Debug\ContactApp.pdb
+C:\Users\freew\Documents\Cours_C#\ContactApp\ContactApp\obj\Debug\ContactApp.csproj.AssemblyReference.cache
+C:\Users\freew\Documents\Cours_C#\ContactApp\ContactApp\obj\Debug\ContactApp.csproj.CoreCompileInputs.cache
+C:\Users\freew\Documents\Cours_C#\ContactApp\ContactApp\obj\Debug\ContactApp.exe
+C:\Users\freew\Documents\Cours_C#\ContactApp\ContactApp\obj\Debug\ContactApp.pdb
+C:\Users\freew\Documents\Cours_C#\ContactApp\ContactApp\obj\Debug\ContactApp.exe.config
