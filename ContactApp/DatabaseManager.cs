@@ -7,22 +7,21 @@ namespace ContactApp
 {
     public class DatabaseManager
     {
-        // La chaîne de connexion - ADAPTE le nom de ta BDD si nécessaire !
+        
         private string connectionString = "Server=localhost;Database=contact_manager;Uid=root;Pwd=;";
 
-        // Ici on va ajouter nos méthodes
+        
         public void InsertContact(string Nom, string Email, int Telephone)
         {
             using (var connection = new MySqlConnection(connectionString))
             {
                 string query = "INSERT INTO contacts (Nom, Email, Telephone) VALUES (@Nom, @Email, @Telephone)";
                 MySqlCommand cmd = new MySqlCommand(query, connection);
-                // Add parameters to prevent SQL injection
                 cmd.Parameters.AddWithValue("@Nom", Nom);
                 cmd.Parameters.AddWithValue("@Email", Email);
                 cmd.Parameters.AddWithValue("@Telephone", Telephone);
                 connection.Open();
-                cmd.ExecuteNonQuery(); // Execute the insert command
+                cmd.ExecuteNonQuery(); 
             }
         }
 
@@ -57,7 +56,7 @@ namespace ContactApp
                 MySqlCommand CommmandeRechercheNom = new MySqlCommand(requeteRechercheContatctNom, connection);
 
 
-                // Add parameters to prevent SQL injection
+               
                 CommmandeRechercheNom.Parameters.AddWithValue("@Nom", Nom + "%");
                 
                 connection.Open();
@@ -158,7 +157,7 @@ namespace ContactApp
                 commandeModifierContact.Parameters.AddWithValue("@Telephone", Telephone);
                 commandeModifierContact.Parameters.AddWithValue("@ID", ID);
                 connection.Open();
-                commandeModifierContact.ExecuteNonQuery(); // Execute the insert command
+                commandeModifierContact.ExecuteNonQuery(); 
                 Console.WriteLine("Contact modifier avec succès");
             }
         }
