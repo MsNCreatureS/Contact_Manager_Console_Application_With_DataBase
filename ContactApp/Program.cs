@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
+using MySql.Data.MySqlClient;
 
 namespace ContactApp
 {
@@ -16,6 +17,10 @@ internal class Program
             List<Contact> contacts = new List<Contact>();
 
             int compteurContact = 0;
+
+
+            DatabaseManager databaseManager = new DatabaseManager();
+
 
             while (true)
             {
@@ -53,7 +58,7 @@ internal class Program
                         Console.Write("Veuillez entrer un Telephone :");
                         int reponseUtiAjouterTelephone = Convert.ToInt32(Console.ReadLine());
 
-                         contacts.Add(new Contact(reponseUtiAjouterNom, reponseUtiAjouterEmail, reponseUtiAjouterTelephone));
+                        databaseManager.InsertContact(reponseUtiAjouterNom, reponseUtiAjouterEmail, reponseUtiAjouterTelephone);
 
                         compteurContact++;
 
@@ -68,10 +73,7 @@ internal class Program
                     case "2":
                         Console.WriteLine("On va afficher les contact si dessous : ");
 
-                        foreach (var listeContact in contacts)
-                        {
-                            Console.WriteLine(listeContact);
-                        }
+                        databaseManager.AfficheContact();
 
                         Console.Write("Voulez vous revenir au menu principal ?");
                         string reponseUtiRetourAuMenu = Console.ReadLine();
@@ -95,66 +97,24 @@ internal class Program
                                     Console.Write("Taper le nom de la personne recherchée : ");
                                     string reponseUtiTypeRechercheNom = Console.ReadLine();
 
-                                    bool contactTrouve = false; 
-
-                                    foreach (var contact in contacts)
-                                    {
-                                        
-                                        if (contact.nom.Contains(reponseUtiTypeRechercheNom))
-                                        {
-                                            Console.WriteLine(contact); 
-                                            contactTrouve = true;
-                                        }
-                                    }
-
-                                    if (!contactTrouve)
-                                    {
-                                        Console.WriteLine("Aucun contact trouvé !");
-                                    }
+                                    databaseManager.RechercheContactNom(reponseUtiTypeRechercheNom);
                                     break;
                                 
                                 case "2":
                                     Console.WriteLine("Taper l'email de la personne rechercher");
                                     string reponseUtiTypeRechercheEmail = Console.ReadLine();
 
-                                    bool contactTrouveEmail = false; 
+                                    databaseManager.RechercheContactNom(reponseUtiTypeRechercheEmail);
 
-                                    foreach (var contact in contacts)
-                                    {
-                                        
-                                        if (contact.email.Contains(reponseUtiTypeRechercheEmail))
-                                        {
-                                            Console.WriteLine(contact); 
-                                            contactTrouveEmail = true;
-                                        }
-                                    }
-
-                                    if (!contactTrouveEmail)
-                                    {
-                                        Console.WriteLine("Aucun contact trouvé !");
-                                    }
                                     break;
 
                                 case "3":
                                     Console.WriteLine("Taper le telephone la personne rechercher");
                                     string reponseUtiTypeRechercheTelephone = Console.ReadLine();
 
-                                    bool contactTrouveTelephone = false; 
+                                    databaseManager.RechercheContactNom(reponseUtiTypeRechercheTelephone);
 
-                                    foreach (var contact in contacts)
-                                    {
-                                        
-                                        if (contact.telephone.ToString().Contains(reponseUtiTypeRechercheTelephone))
-                                        {
-                                            Console.WriteLine(contact); 
-                                            contactTrouveTelephone = true;
-                                        }
-                                    }
 
-                                    if (!contactTrouveTelephone)
-                                    {
-                                        Console.WriteLine("Aucun contact trouvé !");
-                                    }
                                     break;
 
                             }
@@ -175,18 +135,12 @@ internal class Program
                         {
 
 
-                            int numeroContact = 1;
-                            foreach (var listeContact in contacts)
-                            {
-                                Console.WriteLine(numeroContact + ". " + listeContact);
-                                numeroContact++; 
-                            }
+                            databaseManager.AfficheModifierContact();
 
-                            Console.Write("Taper le numero du contact que vous souhaitez modifier : ");
+                            Console.Write("Taper l'ID du contact que vous souhaitez modifier : ");
                             string reponseUtiModifContact = Console.ReadLine();
 
-                            int numeroChoisi = Convert.ToInt32(reponseUtiModifContact);
-                            int indexDansListe = numeroChoisi - 1;
+
 
                             
                             Console.Write("Entrez le nouveau nom : ");
@@ -200,11 +154,7 @@ internal class Program
 
                             int reponseUtiModifContactTelephoneConvert = Convert.ToInt32( reponseUtiModifContactTelephone );
 
-
-                            contacts[indexDansListe].nom = reponseUtiModifContactNom;
-                            contacts[indexDansListe].email = reponseUtiModifContactEmail;
-                            contacts[indexDansListe].telephone = reponseUtiModifContactTelephoneConvert;
-                            Console.WriteLine("Contact modifié !");
+                            databaseManager.ModifierContact(reponseUtiModifContactNom, reponseUtiModifContactEmail, reponseUtiModifContactTelephone, reponseUtiModifContact);
 
                             Console.Write("Voulez vous revenir au menu principal ?");
                             string reponseUtiRetourAuMenuModif = Console.ReadLine();
@@ -224,23 +174,16 @@ internal class Program
                         Console.WriteLine("Supprimer un contact");
                         while (true)
                         {
-                            int numeroContactSupp = 1;
-                            foreach (var listeContact in contacts)
-                            {
-                                Console.WriteLine(numeroContactSupp + ". " + listeContact);
-                                numeroContactSupp++;
-                            }
+
+                            databaseManager.AfficheModifierContact();
 
                             Console.Write("Taper le numero du contact que vous souhaitez supprimer : ");
                             string reponseUtiSuppContact = Console.ReadLine();
 
-                            int numeroChoisiSupp = Convert.ToInt32(reponseUtiSuppContact);
-                            int indexDansListeSupp = numeroChoisiSupp - 1;
 
 
-                            contacts.RemoveAt(indexDansListeSupp);
+                            databaseManager.SupprimerContact(reponseUtiSuppContact);
 
-                            Console.WriteLine("Contact supprimer !");
 
                             Console.Write("Voulez vous revenir au menu principal ?");
                             string reponseUtiRetourAuMenuModif = Console.ReadLine();
